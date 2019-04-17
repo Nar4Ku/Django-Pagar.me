@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+  <button id="pay-button">Abrir modal de pagamento</button>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+var button = document.querySelector('button')
+
+button.addEventListener('click', function() {
+  function handleSuccess (data) {
+    console.log(data);
+  }
+
+  function handleError (data) {
+    console.log(data);
+  }
+
+  var checkout = new PagarMeCheckout.Checkout({
+    encryption_key: '{{ key }}',
+    success: handleSuccess,
+    error: handleError
+  });
+
+  checkout.open({
+    amount: {{ valor_compra }},
+    customerData: 'true',   
+    items: [
+      {% for item in lista_items %}
+      {
+        id: '{{item.id}}',
+        title: '{{ item.title }}',
+        unit_price: {{ item.unit_price}},
+        quantity: {{item.quantity}},
+        tangible: true
+      },
+      {% endfor %}
+    ]
+    
+
+  })  
+
+});
+      
+</script>   
+{% endblock  %}
