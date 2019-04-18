@@ -2,13 +2,15 @@
 {% block content %}
 
 <div class="container">
-  <button id="pay-button">Abrir modal de pagamento</button>
+  <button id="pay-button">Open the modal of payment</button>
 </div>
 
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
+'use strict'
+//Remember set the html element more precisely
 var button = document.querySelector('button')
 
 button.addEventListener('click', function() {
@@ -21,27 +23,27 @@ button.addEventListener('click', function() {
   }
 
   var checkout = new PagarMeCheckout.Checkout({
-    encryption_key: '{{ key }}',
+    encryption_key: '{{ key }}', 
     success: handleSuccess,
     error: handleError
   });
 
   checkout.open({
     amount: {{ valor_compra }},
-    customerData: 'true',   
+    customerData: 'true',
+    uiColor: '#ff00ff',     //Set the color as you like
     items: [
       {% for item in lista_items %}
       {
         id: '{{item.id}}',
         title: '{{ item.title }}',
-        unit_price: {{ item.unit_price}},
+        unit_price: {{ item.unit_price }},
         quantity: {{item.quantity}},
         tangible: true
       },
       {% endfor %}
-    ]
-    
-
+    ], 
+    maxInstallments: {{ installments }},
   })  
 
 });
