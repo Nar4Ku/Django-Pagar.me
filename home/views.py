@@ -2,7 +2,7 @@ from django.shortcuts import render
 import pagarme
 
 #You can pass your api_keys as enviroment variable if you wanna
-CRYP_KEY = 'cryp_key from dashboard'
+CRYP_KEY = 'your cryp_key'
 
 def test(request):
     # You cryp key, founded in Pagar.me dashboard
@@ -13,13 +13,13 @@ def test(request):
         {
             'id': '1', 
             'title': 'Soccer Ball',
-            'unit_price': 55000,        #Value in R$ cents
+            'unit_price': 4590,        #Value in R$ cents
             'quantity': 1
         },
         {
             'id': '2',
-            'title': 'Caderno escolar',
-            'unit_price': 3200,              #Value in R$ cents
+            'title': 'Scholar Notebook',
+            'unit_price': 1798,              #Value in R$ cents
             'quantity': 3
         }
     ]
@@ -29,8 +29,8 @@ def test(request):
         amount += (item.get('unit_price') * item.get('quantity'))
     
 
-    #Max number of installments you wish. Remember Pagar.me accept value lower or equal 12.
-    maxInstallments = 6
+    # Set the max number of installments you wish. But remember, pagar.me only accept values lower or equal to 12.
+    maxInstallments = 3
 
     context = { 
         'key': key,
@@ -40,3 +40,7 @@ def test(request):
         }
 
     return render(request, 'test.html', context)
+
+def success(request):
+    context = {}
+    return render(request, 'success.html', context)

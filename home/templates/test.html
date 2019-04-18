@@ -13,13 +13,16 @@
 //Remember set the html element more precisely
 var button = document.querySelector('button')
 
-button.addEventListener('click', function() {
+button.addEventListener('click', function(e) {
+  e.preventDefault();
   function handleSuccess (data) {
     console.log(data);
+    window.location.href  = '/success';
   }
 
   function handleError (data) {
     console.log(data);
+    //window.location.href  = '/url of handleError';
   }
 
   var checkout = new PagarMeCheckout.Checkout({
@@ -31,7 +34,7 @@ button.addEventListener('click', function() {
   checkout.open({
     amount: {{ valor_compra }},
     customerData: 'true',
-    uiColor: '#ff00ff',     //Set the color as you like
+    uiColor: '#f4947b',     //Set the color as you like
     items: [
       {% for item in lista_items %}
       {
@@ -47,6 +50,5 @@ button.addEventListener('click', function() {
   })  
 
 });
-      
 </script>   
 {% endblock  %}
