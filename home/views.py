@@ -2,8 +2,9 @@ from django.shortcuts import render
 import pagarme
 
 #You can pass your api_keys as enviroment variable if you wanna
-CRYP_KEY = 'your cryp_key'
+CRYP_KEY = 'Your Cryp Pass'
 
+@login_required 
 def test(request):
     # You cryp key, founded in Pagar.me dashboard
     key = CRYP_KEY
