@@ -3,7 +3,7 @@
 
 <div class="container">
   <hr>
-  <input type='button' value="Logout" onclick='window.location.href="{% url 'logout' %}"'>
+  <button onclick='window.location.href="{% url 'logout' %}"'>Logout</button>
   </br></br>
   <button id="pay-button">Open the modal of payment</button>
 </div>
@@ -35,14 +35,10 @@ button.addEventListener('click', function(e) {
   });
 
   checkout.open({
-    amount: {{ valor_compra }},
-    capture: 'true',
+    amount: {{ valor_compra }},  
     customerData: 'true',
     uiColor: '#f4947b',     //Set the color as you like
     postback_url: 'https://b5709dd0.ngrok.io/post-back/',    // Set your URL  for post-back here
-    customer: {
-      external_id: '{{ metadata.external_id }}'
-    },
     items: [
       {% for item in lista_items %}
       {
@@ -55,6 +51,9 @@ button.addEventListener('click', function(e) {
       {% endfor %}
     ], 
     maxInstallments: {{ installments }},
+    freeInstallments: {{ freeInstallments }},     
+    interestRate: {{ interestRate }}, 
+    paymentButtonText: '{{ paymentButton }}'
    })  
 
 });

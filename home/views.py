@@ -4,7 +4,7 @@ import pagarme
 from prettyprinter import pprint
 
 #You can pass your api_keys as enviroment variable if you wanna
-CRYP_KEY = 'CRYP PASS'
+CRYP_KEY = 'your cryp key'
 
 def test(request):
     # You cryp key, founded in Pagar.me dashboard
@@ -15,14 +15,26 @@ def test(request):
         {
             'id': '1', 
             'title': 'Soccer Ball',
-            'unit_price': 4590,        #Value in R$ cents
+            'unit_price': 4000,        #Value in R$ cents
             'quantity': 1
         },
         {
             'id': '2',
             'title': 'Scholar Notebook',
-            'unit_price': 1798,              #Value in R$ cents
-            'quantity': 3
+            'unit_price': 2000,              #Value in R$ cents
+            'quantity': 2
+        },
+        {
+            'id': '3',
+            'title': 'Gloves',
+            'unit_price': 500,              #Value in R$ cents
+            'quantity': 2
+        },
+        {
+            'id': '4',
+            'title': 'Magical Pen',
+            'unit_price': 1000,              #Value in R$ cents
+            'quantity': 1
         }
     ]
     # Calculate the total amount
@@ -32,19 +44,23 @@ def test(request):
     
 
     # Set the max number of installments you wish. But remember, pagar.me only accept values lower or equal to 12.
-    maxInstallments = 3
+    maxInstallments = 4
+    #set the number of installments without interest
+    freeInstallments = 2
+    #set the interestRate 
+    interestRate = 10 
 
-    # getUserId or IdTransation for identification of transation.
-    metadata = {
-        'external_id': '6668666'
-    }
+    #set the title of the paymentButton
+    paymentButton = 'Finalizar a compra'
 
     context = { 
         'key': key,
         'valor_compra': amount,
         'lista_items': items,
         'installments': maxInstallments,
-        'metadata': metadata
+        'freeInstallments': freeInstallments,
+        'interestRate': interestRate,
+        'paymentButton': paymentButton
         }
 
     return render(request, 'test.html', context)
